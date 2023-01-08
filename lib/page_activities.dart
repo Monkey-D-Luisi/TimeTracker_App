@@ -48,15 +48,28 @@ class _PageActivitiesState extends State<PageActivities> {
                 //TODO other actions
               ],
             ),
-            body: ListView.separated(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: snapshot.data!.root.children.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  _buildRow(snapshot.data!.root.children[index], index),
-              separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-            ),
-          );
+            body: Column( children: <Widget> [
+              Padding(
+                padding: EdgeInsets.all(15),
+              ),
+              if(snapshot.data!.root is Project)
+                ElevatedButton(
+                  child: Text('Add'),
+                  onPressed: () {
+                    //addActivityToProject();
+                  },
+                ),
+              Expanded(child:
+                ListView.separated(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: snapshot.data!.root.children.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      _buildRow(snapshot.data!.root.children[index], index),
+                  separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
+                ),
+              )]
+          ));
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
