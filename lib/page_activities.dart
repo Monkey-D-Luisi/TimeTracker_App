@@ -77,6 +77,7 @@ class _PageActivitiesState extends State<PageActivities> {
         title: Text('${activity.name}'),
         trailing: Text('$strDuration'),
         onTap: () => _navigateDownActivities(activity.id),
+        leading: Icon(Icons.work),
       );
     } else if (activity is Task) {
       Task task = activity as Task;
@@ -96,6 +97,7 @@ class _PageActivitiesState extends State<PageActivities> {
             _refresh();
           }
         },
+        leading: Icon(Icons.task),
       );
     }
     else
