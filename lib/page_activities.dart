@@ -95,7 +95,19 @@ class _PageActivitiesState extends State<PageActivities> {
     } else if (activity is Task) {
       Task task = activity as Task;
       Widget trailing;
-      trailing = Text('$strDuration');
+      trailing = RichText(
+          text:
+            TextSpan(
+              children: [
+                TextSpan(text: '$strDuration',
+                  style: TextStyle(fontSize: 20),),
+                if(task.active)
+                  WidgetSpan(
+                    child: Icon(Icons.timer),
+                  ),
+                ],
+              ),
+            );
 
       return ListTile(
         title: Text('${activity.name}'),
@@ -103,9 +115,11 @@ class _PageActivitiesState extends State<PageActivities> {
         onTap: () => _navigateDownIntervals(activity.id),
         onLongPress: () {
           if ((activity as Task).active) {
+            activity.active = false;
             stop(activity.id);
             _refresh();
           } else {
+            activity.active = true;
             start(activity.id);
             _refresh();
           }
