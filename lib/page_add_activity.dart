@@ -20,7 +20,7 @@ class _PageCreateState extends State<PageAddActivity> {
   }
 
   var _activityType = ['Project', 'Task'];
-  var _list = ['Software Design', 'pipo', 'prueba'];
+  var _list = ['Home', 'Software Design', 'Software Testing', 'Databases', 'Problems', 'Time Tracker'];
   String _vistaType = 'Select the type of the Activity that you want to add';
   String _vistaProjects = 'Select the project that you want to add it to';
 

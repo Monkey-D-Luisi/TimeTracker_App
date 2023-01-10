@@ -19,7 +19,7 @@ class _PageActivitiesState extends State<PageActivities> {
   late int id;
   late Future<Tree> futureTree;
   late Timer _timer;
-  static const int periodeRefresh = 6;
+  static const int periodeRefresh = 2;
 
   @override
   void initState() {
@@ -114,12 +114,12 @@ class _PageActivitiesState extends State<PageActivities> {
         trailing: trailing,
         onTap: () => _navigateDownIntervals(activity.id),
         onLongPress: () {
-          if ((activity as Task).active) {
-            activity.active = false;
+          if (activity.active) {
+            //activity.active = false;
             stop(activity.id);
             _refresh();
           } else {
-            activity.active = true;
+            //activity.active = true;
             start(activity.id);
             _refresh();
           }
@@ -140,7 +140,6 @@ class _PageActivitiesState extends State<PageActivities> {
       builder: (context) => PageActivities(childId),
     )).then( (var value) {
       _activateTimer();
-      _refresh();
     });
   }
 
@@ -151,7 +150,6 @@ class _PageActivitiesState extends State<PageActivities> {
       builder: (context) => PageIntervals(childId),
     )).then( (var value) {
       _activateTimer();
-      _refresh();
     });
   }
 
@@ -162,8 +160,7 @@ class _PageActivitiesState extends State<PageActivities> {
 
   void _activateTimer() {
     _timer = Timer.periodic(Duration(seconds: periodeRefresh), (Timer t) {
-      futureTree = getTree(id);
-      setState(() {});
+      _refresh();
     });
   }
 
@@ -174,7 +171,6 @@ class _PageActivitiesState extends State<PageActivities> {
       builder: (context) => PageAddActivity(id),
     )).then( (var value) {
       _activateTimer();
-      _refresh();
     });
   }
 
