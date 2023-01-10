@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timetracker_app/page_intervals.dart';
 import 'package:timetracker_app/tree.dart' hide getTree;
 import 'package:timetracker_app/requests.dart';
+import 'page_add_activity.dart';
 import 'dart:async';
 
 class PageActivities extends StatefulWidget {
@@ -12,6 +13,7 @@ class PageActivities extends StatefulWidget {
   @override
   _PageActivitiesState createState() => _PageActivitiesState();
 }
+
 
 class _PageActivitiesState extends State<PageActivities> {
   late int id;
@@ -54,10 +56,8 @@ class _PageActivitiesState extends State<PageActivities> {
               ),
               if(snapshot.data!.root is Project)
                 ElevatedButton(
-                  child: Text('Add'),
-                  onPressed: () {
-                    //addActivityToProject();
-                  },
+                  child: Text('Add a new Activity'),
+                  onPressed: () =>  _addActivityToProject(),
                 ),
               Expanded(child:
                 ListView.separated(
@@ -164,6 +164,17 @@ class _PageActivitiesState extends State<PageActivities> {
     _timer = Timer.periodic(Duration(seconds: periodeRefresh), (Timer t) {
       futureTree = getTree(id);
       setState(() {});
+    });
+  }
+
+  void _addActivityToProject() {
+    _timer.cancel();   // we can not do just _refresh() because then the up arrow doesnt appear in the appbar
+    Navigator.of(context)
+        .push(MaterialPageRoute<void>(
+      builder: (context) => PageAddActivity(id),
+    )).then( (var value) {
+      _activateTimer();
+      _refresh();
     });
   }
 

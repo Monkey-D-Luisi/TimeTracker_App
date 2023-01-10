@@ -56,3 +56,14 @@ Future<void> stop(int id) async {
     throw Exception('Failed to get children');
   }
 }
+
+Future<void> addActivityToProject(bool isProject, String name, String fName) async {
+  String uri = "$baseUrl/add?$isProject?$name?$fName";
+  final response = await client.get(Uri.parse(uri));
+  if (response.statusCode == 200) {
+    print("statusCode=$response.statusCode");
+  } else {
+    print("statusCode=$response.statusCode");
+    throw Exception('Failed to get children');
+  }
+}
